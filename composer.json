@@ -1,0 +1,24 @@
+{
+    "name": "silangtech/queue",
+    "description" : "消息队列",
+    "type": "application",
+    "keywords": ["SilangPHP","Server","queue","redis","kafka","php framework"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "shengsheng",
+            "email": "9448923@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "ext-openssl": "*"
+    },
+    "_comment": "SilangPHP/Queue",
+    "autoload": {
+        "psr-4": {
+            "SilangPHP\\Queue\\": "src/",
+            "test\\": "test/"
+        }
+    }
+}
