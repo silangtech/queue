@@ -41,7 +41,7 @@ class Redis
         return $this->redis->rpop($this->key.$name);
     }
 
-    public function addTask($name, $time, $data)
+    public function addTask($name,$data,$time='')
     {
         $this->redis->lpush($this->key.$name,$data);
     }

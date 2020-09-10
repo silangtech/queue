@@ -47,7 +47,7 @@ class RedisDelay
         return $this->redis->zRangeByScore($this->key, 0, time(), ['limit' => [0, 1]]);
     }
 
-    public function addTask($name, $time, $data)
+    public function addTask($name, $data, $time)
     {
         return $this->redis->zAdd(
             $this->key,
