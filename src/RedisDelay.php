@@ -26,7 +26,14 @@ class RedisDelay
         $this->key = $this->prefix . $queue;
         $this->redis = new \Redis();
         $this->redis->connect($config['host'], $config['port'], $config['timeout']);
-        $this->redis->auth($config['auth']);
+        if(!empty($config['auth']))
+        {
+            $this->redis->auth($config['auth']);
+        }
+        if(!empty($config['db']))
+        {
+            $this->redis->select($config['db']);
+        }
     }
 
     public function delTask($value)
