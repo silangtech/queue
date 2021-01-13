@@ -21,7 +21,7 @@ class Redis
     protected $redis = null;
     protected $key = '';
 
-    public function __construct($queue, $config = [])
+    public function __construct($queue = '', $config = [])
     {
         $this->key = $this->prefix . $queue;
         $this->redis = new \Redis();
