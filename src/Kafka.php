@@ -25,6 +25,7 @@ class Kafka
     protected $consumer;
     protected $producer_topic = [];
     protected $consumer_topic = [];
+    protected $consumer_topic_partition = [];
 
     public function __construct($queue = '', $config = [])
     {
@@ -66,10 +67,15 @@ class Kafka
         if(!isset($this->consumer_topic[$name]))
         {
             $this->new_comsumer_topic($name);
+        }
+        if(!isset($this->consumer_topic_partition[$name."_".$partition]))
+        {
 	        $this->consumer_topic[$name]->consumeStart($partition, \RD_KAFKA_OFFSET_STORED);
+            $this->consumer_topic_partition[$name."_".$partition] = $partition;
         }
         
         $msg = $this->consumer_topic[$name]->consume($partition, $timeout);
+        // 为NUll没数据的情况
         if (null === $msg || $msg->err === \RD_KAFKA_RESP_ERR__PARTITION_EOF) {
             return false;
         } elseif ($msg->err && $msg->err != \RD_KAFKA_RESP_ERR_NO_ERROR) {
@@ -88,8 +94,8 @@ class Kafka
         }
         // 这里的key先不加,直接使用value，使用上不大
         $this->producer_topic[$name]->produce($partition, 0, $payload);
-        // $this->producer->poll(0);
-        // $result = $this->producer->flush(10000);
+        $this->producer->poll(0);
+        $result = $this->producer->flush(10000);
     }
 
     public function stats()
